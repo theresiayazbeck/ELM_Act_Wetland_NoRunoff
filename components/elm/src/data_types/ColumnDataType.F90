@@ -1149,9 +1149,6 @@ contains
           if (lun_pp%itype(l)==istice .or. lun_pp%itype(l)==istice_mec) then
              this%t_soisno(c,1:nlevgrnd) = 250._r8
 
-          else if (lun_pp%itype(l) == istwet) then
-             this%t_soisno(c,1:nlevgrnd) = 277._r8
-
           else if (lun_pp%urbpoi(l)) then
              if (use_vancouver) then
                 if (col_pp%itype(c) == icol_road_perv .or. col_pp%itype(c) == icol_road_imperv) then
@@ -1620,15 +1617,6 @@ contains
                    this%h2osoi_vol(c,j) = 0.0_r8
                 end do
              end if
-          else if (lun_pp%itype(l) == istwet) then
-             nlevs = nlevgrnd
-             do j = 1, nlevs
-                if (j > nlevbed) then
-                   this%h2osoi_vol(c,j) = 0.0_r8
-                else
-                   this%h2osoi_vol(c,j) = 1.0_r8
-                endif
-             end do
           else if (lun_pp%itype(l) == istice .or. lun_pp%itype(l) == istice_mec) then
              nlevs = nlevgrnd
              do j = 1, nlevs
