@@ -356,7 +356,7 @@ contains
     use landunit_varcon , only : istwet, istdlak, istice, istice_mec
     use column_varcon   , only : icemec_class_to_col_itype
     use subgridMod      , only : subgrid_get_topounitinfo
-    use pftvarcon       , only : noveg
+    use pftvarcon       , only : noveg,nc3_nonarctic_grass
 
     !
     ! !ARGUMENTS:    
@@ -434,6 +434,15 @@ contains
              endif
           enddo
 
+       elseif (ltype==istwet) then 
+
+          ! Currently assume that wetland landunit only has only one column 
+          ! and that the column has c3grass pft
+       
+          call add_landunit(li=li, ti=ti, ltype=ltype, wttopounit=wtlunit2topounit)
+          call add_column(ci=ci, li=li, ctype=ltype, wtlunit=1.0_r8)
+          call add_patch(pi=pi, ci=ci, ptype=nc3_nonarctic_grass, wtcol=1.0_r8)
+
        else
 
           ! Currently assume that each landunit only has only one column 
@@ -442,7 +451,7 @@ contains
           call add_landunit(li=li, ti=ti, ltype=ltype, wttopounit=wtlunit2topounit)
           call add_column(ci=ci, li=li, ctype=ltype, wtlunit=1.0_r8)
           call add_patch(pi=pi, ci=ci, ptype=noveg, wtcol=1.0_r8)
-
+          
        end if   ! ltype = istice_mec
     endif       ! npfts > 0       
 
